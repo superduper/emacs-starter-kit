@@ -1,0 +1,330 @@
+#+TITLE: Starter Kit Lisp
+#+OPTIONS: toc:nil num:nil ^:nil
+
+This is part of the [[file:starter-kit.org][Emacs Starter Kit]].
+This is zahardzhan's config.
+
+* Keybindings
+** Misc
+Toggle input method.
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-SPC") 'toggle-input-method)
+#+end_src
+
+C-q is more useful as undo than standart Emacs keybinding.
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-q") 'undo)
+#+end_src
+
+Completion that uses many different methods to find options.
+#+begin_src emacs-lisp
+(global-set-key (kbd "S-SPC") 'dabbrev-expand)
+#+end_src
+
+Turn on the menu bar for exploring new modes
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-<f10>") 'menu-bar-mode)
+#+end_src
+
+** Like everywhere else, C-w kills word or region.
+
+#+begin_src emacs-lisp
+(defun backward-kill-word-or-kill-region (arg)
+  (interactive "p")
+  (if (region-active-p)
+      (kill-region (region-beginning) 
+                   (region-end))
+    (backward-kill-word arg)))
+
+(global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
+
+(define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word-or-kill-region)
+
+(add-hook 'ido-setup-hook 
+          (lambda ()
+            (define-key ido-completion-map (kbd "C-w") 'ido-delete-backward-word-updir)))
+#+end_src
+
+*** Kill buffer quickly by C-x C-k
+
+#+begin_src emacs-lisp
+(defun kill-current-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
+
+(global-set-key (kbd "C-x C-k") 'kill-current-buffer)
+#+end_src
+
+** Window & Buffer management
+
+Turn off scrollbar.
+#+begin_src emacs-lisp
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode nil)
+  (setq default-vertical-scroll-bar nil))
+#+end_src
+
+Move between windows.
+#+begin_src emacs-lisp
+;; (global-set-key [(control tab)] 'ido-switch-buffer)
+
+(windmove-default-keybindings)
+(global-set-key (kbd "C-x C-o") 'other-window)
+(global-set-key [(shift iso-lefttab)] 'other-window)
+(global-set-key [(shift control iso-lefttab)] (lambda () (interactive) (other-window -1)))
+#+end_src
+
+* ERC --- Internet Relay Chat for Emacs
+
+#+begin_src emacs-lisp
+(require 'erc)
+(require 'erc-autoaway)
+(require 'erc-fill)
+(require 'erc-join)
+(require 'erc-lang)
+(require 'erc-log)
+(require 'erc-menu)
+(require 'erc-services)
+
+(erc-autojoin-mode t)
+(erc-fill-mode t)
+(erc-nickserv-mode t)
+
+(custom-set-variables
+ '(erc-nick           "zahardzhan")
+ '(erc-email-userid   "zahardzhan@gmail.com")
+ '(erc-user-full-name "Roman Zaharov")
+ '(erc-nick-uniquifier "_")
+
+ '(erc-autojoin-channels-alist '(("freenode.net" "#clojure")
+                                 ("irc.int.ru"   "#unix")))
+ '(erc-encoding-coding-alist   '(("#debian-russian" . cyrillic-koi8) 
+                                 ("#altlinux"       . cyrillic-koi8) 
+                                 ("#unix.ru"        . cyrillic-koi8) 
+                                 ("#fidorus"        . cyrillic-koi8)))
+
+ '(erc-prompt-for-password nil)
+ '(erc-kill-queries-on-quit t)
+ '(erc-server-coding-system '(koi8-r . koi8-r))
+
+ '(erc-log-insert-log-on-open nil)
+ '(erc-log-channels t)
+ '(erc-log-channels-directory "~/.irclogs/")
+ '(erc-save-buffer-on-part t)
+ '(erc-hide-timestamps nil)
+
+ '(erc-max-buffer-size 20000)
+
+ '(erc-autoaway-idle-seconds 1200)
+ '(erc-autoaway-message "I'm gone (autoaway after %i seconds)")
+ '(erc-auto-discard-away t)
+
+ '(erc-auto-query 'buffer)
+
+ '(erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT"))
+
+ '(erc-prompt-for-nickserv-password nil))
+
+(defun erc-connect ()
+  (interactive)
+  (progn
+    (erc-select :server "irc.freenode.net" :port 6667 :nick "zahardzhan")))
+#+end_src
+
+* Zahardzhan's color theme 'Dzhan'
+
+#+begin_src emacs-lisp
+(require 'color-theme)
+
+(setq dzhan-fore-color    "#b0b0b0"
+      dzhan-back-color    "#303058"
+      dzhan-orange-color  "#f09a71"
+      dzhan-comment-color "#10a5b7")
+
+(defun color-theme-dzhan ()
+  "Color theme by Roman Zaharov <zahardzhan@gmail.com>"
+  (interactive)
+  (color-theme-install
+   `(color-theme-dzhan
+     ((foreground-color . ,dzhan-fore-color)
+      (background-color . ,dzhan-back-color)
+      (mouse-color      . ,dzhan-fore-color)
+      (cursor-color     . ,dzhan-fore-color)
+      (border-color     . "#405088")
+      (background-mode  . dark))
+
+     ((help-highlight-face . underline)
+      (list-matching-lines-face . bold)
+      (widget-mouse-face . highlight))
+
+     (default ((t (:height normal :width normal
+                           :background ,dzhan-back-color
+                           :foreground ,dzhan-fore-color
+                           :inverse-video nil :box nil :strike-through nil
+                           :overline nil :stipple nil :underline nil
+                           :slant normal :weight normal))))
+
+     (bold ((t (:bold t :weight bold))))
+     (bold-italic ((t (:italic t :bold t :slant italic :weight bold))))
+     (border ((t (:background "#25254d"))))
+     (comint-highlight-input ((t (:bold t :weight bold))))
+     (comint-highlight-prompt ((t (:foreground "cyan"))))
+     (cursor ((t (:foreground "#303058" :background "#b0b0b0"))))
+     
+     (fixed-pitch ((t (:family "courier"))))
+
+     (font-lock-builtin-face ((t (:foreground "#899cff"))))
+     (font-lock-comment-face ((t (:foreground ,dzhan-comment-color))))
+     (font-lock-constant-face ((t (:foreground "13c1d5"))))
+     (font-lock-doc-face ((t (:foreground ,dzhan-comment-color))))
+     (font-lock-doc-string-face ((t (:foreground ,dzhan-comment-color))))
+     (font-lock-function-name-face ((t (:foreground "#8dbafc"))))
+     (font-lock-keyword-face ((t (:foreground ,dzhan-orange-color))))
+     (font-lock-preprocessor-face ((t (:foreground ,dzhan-orange-color))))
+     (font-lock-reference-face ((t (:underline t))))
+     (font-lock-string-face ((t (:foreground "#4aa5ff"))))
+     (font-lock-type-face ((t (:foreground ,dzhan-orange-color))))
+     (font-lock-variable-name-face ((t (:foreground "#44c573"))))
+     (font-lock-warning-face ((t (:bold t :foreground "#d04d63" :weight bold))))
+     
+     (fringe ((t (:background "#222251" :foreground "#b0b0b0"))))
+     (header-line ((t (:box (:line-width -1 :style released-button) :background "grey20" :foreground "grey90" :box nil))))
+     (highlight ((t (:background "#222251"))))
+     (horizontal-divider ((t (:background "gray16" :foreground "#00ff00"))))
+     
+     (ido-first-match ((t (:foreground ,dzhan-orange-color))))
+     (ido-only-match ((t (:foreground ,dzhan-orange-color :bold t))))
+     (ido-subdir ((t (:foreground ,dzhan-orange-color))))
+     
+     (isearch ((t (:box (:line-width -1) :foreground ,dzhan-orange-color :background ,dzhan-back-color :underline nil))))
+     (isearch-fail ((t (:background ,dzhan-back-color :foreground ,dzhan-orange-color :weight bold :inverse-video t))))
+     (isearch-lazy-highlight-face ((t  (:background ,dzhan-back-color :foreground ,dzhan-orange-color :underline t))))
+     
+     (italic ((t (:italic t :slant italic))))
+     (menu ((t (:background "gray16" :foreground "green"))))
+     
+     (modeline ((t (:background "grey75" :foreground "grey15" :box (:line-width -1 :style flat)))))
+     (modeline-highlight ((t (:bold t))))
+     (mode-line-inactive ((t (:background "grey60" :foreground "grey15" :box (:line-width -1 :style flat)))))
+     
+     (minibuffer-prompt ((t (:foreground ,dzhan-orange-color))))
+     
+     (mouse ((t (:background "yellow"))))
+     (primary-selection ((t (:background "#4a4a67"))))
+     (region ((t (:background "#444478"))))
+     (scroll-bar ((t (:background "gray16" :foreground "#00ff00"))))
+     (secondary-selection ((t (:background "#00ff00" :foreground "black"))))
+
+     (show-paren-match    ((t (:foreground ,dzhan-orange-color :weight bold))))
+     (show-paren-mismatch ((t (:foreground ,dzhan-orange-color :weight bold :inverse-video t
+                                           :box (:line-width -1)))))
+
+     ;;  (slime-error-face ((t (:background "indian red" :foreground "green" :bold t))))
+     ;;  (slime-warning-face ((t (:background "indian red" :foreground "green"))))
+     ;;  (slime-style-warning-face ((t (:background "indian red" :foreground "green"))))
+     ;;  (slime-note-face ((t (:background "indian red" :foreground "green"))))
+     ;;  (slime-highlight-face ((t (:background "indian red" :foreground "green"))))
+
+     ;;  (sldb-catch-tag-face ((t (:foreground "khaki")))) ;%
+     ;;  (sldb-condition-face ((t (:foreground "light sea green"))))
+     ;;  (sldb-detailed-frame-line-face ((t ())))
+     ;;  (sldb-frame-label-face ((t (:foreground "dark orchid"))))
+     ;;  (sldb-frame-line-face ((t ())))
+     ;;  (sldb-local-name-face ((t (:foreground "IndianRed1"))))
+     ;;  (sldb-local-value-face ((t (:foreground "lemon chiffon"))))
+     ;;  (sldb-reference-face ((t (:background "cyan"))))
+     ;;  (sldb-restart-type-face ((t (:foreground "medium orchid"))))
+     ;;  (sldb-restart-face ((t (:foreground "pale violet red"))))
+     ;;  (sldb-restart-number-face ((t (:foreground "dark orchid"))))
+     ;;  (sldb-section-face ((t (:foreground "sandy brown"))))
+     ;;  (sldb-topline-face ((t (:foreground "IndianRed1"))))
+
+     ;;  (slime-repl-prompt-face ((t (:foreground "pale violet red"))))
+     ;;  (slime-repl-output-face ((t (:foreground "dark orchid"))))
+     ;;  (slime-repl-input-face ((t (:foreground "pale violet red"))))
+     ;;  (slime-repl-result-face ((t (:foreground "medium orchid"))))
+
+     ;;  (slime-inspector-topline-face ((t (:background "gray30" :foreground "green"))))
+     ;;  (slime-inspector-label-face ((t (:foreground "indian red")))) ;%
+     ;;  (slime-inspector-value-face ((t (:foreground "light pink"))))
+     ;;  (slime-inspector-action-face ((t (:background "cyan"))))
+     ;;  (slime-inspector-type-face ((t (:foreground "light sea green")))) ;%
+
+     ;;  (slime-reader-conditional-face ((t ,billc-insignificant-face)))
+     (slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#4aa5ff"))))
+
+     (font-latex-verbatim-face ((t (:foreground ,dzhan-comment-color))))
+
+     (speedbar-button-face ((t (:foreground "#00ff00"))))
+     (speedbar-directory-face ((t (:foreground ,dzhan-orange-color))))
+     (speedbar-file-face ((t (:foreground ,dzhan-fore-color))))
+     (speedbar-highlight-face ((t (:background "#4a4a67" :foreground "#eeeeee"))))
+     (speedbar-selected-face ((t (:foreground ,dzhan-orange-color :underline t))))
+     (speedbar-tag-face ((t (:foreground "yellow"))))
+     (tool-bar ((t (:background "gray16" :foreground "green" :box (:line-width 1 :style released-button)))))
+     (tooltip ((t (:background "#303058" :foreground "#13c1d5"))))
+     (trailing-whitespace ((t (:background "red"))))
+     ;;(underline ((t (:underline t))))
+     (variable-pitch ((t (:family "helv"))))
+     (vertical-divider ((t (:background "gray16" :foreground "#00ff00"))))
+     (widget-button-face ((t (:bold t :weight bold))))
+     (widget-button-pressed-face ((t (:foreground "red"))))
+     (widget-documentation-face ((t (:foreground "lime green"))))
+     (widget-field-face ((t (:background "dim gray"))))
+     (widget-inactive-face ((t (:foreground "light gray"))))
+     (widget-single-line-field-face ((t (:background "dim gray"))))
+     (zmacs-region ((t (:background "steelblue" :foreground "white")))))))
+
+(provide 'color-theme-dzhan)
+#+end_src
+
+* Info mode
+
+#+begin_src emacs-lisp
+(require 'info)
+
+(add-to-list 'Info-directory-list (concat dotfiles-dir "/info"))
+#+end_src
+
+* Org Mode
+** Bullshit mode on --- zahardzhan's blog
+
+#+begin_src emacs-lisp
+(setq org-publish-project-alist
+      '(("zahardzhan.github.com-org"
+         :base-directory "~/Dropbox/Blog/org/"
+         :base-extension "org"
+         :publishing-directory "~/Dropbox/Blog/_posts/"
+         :recursive t
+         :publishing-function org-publish-org-to-html
+         :headline-levels 4
+         :html-extension "html"
+         :body-only t)
+
+        ("zahardzhan.github.com-static"
+         :base-directory "~/Dropbox/Blog/org/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+         :publishing-directory "~/Dropbox/Blog/_posts/"
+         :recursive t
+         :publishing-function org-publish-attachment)
+        
+        ("zahardzhan.github.com"
+         :components ("zahardzhan.github.com-org"
+                      "zahardzhan.github.com-static"))))
+#+end_src
+
+* Typopunct mode --- advanced typography
+
+#+begin_src emacs-lisp
+(require 'typopunct)
+
+(setq-default typopunct-buffer-language 'russian)
+
+(defun typopunct-mode-init ()
+  (typopunct-mode t))
+
+(add-hook 'markdown-mode-hook 'typopunct-mode-init)
+;; (add-hook 'org-mode-hook 'typopunct-mode-init)
+#+end_src
+
+
