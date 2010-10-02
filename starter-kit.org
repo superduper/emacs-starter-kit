@@ -1462,7 +1462,7 @@ title: Программа Emacs Starter Kit
      (define-key lisp-mode-shared-map (kbd "C-c v") 'eval-buffer)
      #+end_src
 
-122. Non-obtrusive parenthesis faces.
+122. Тусклые скобочки.
 
      #+begin_src emacs-lisp
      (defface esk-paren-face
