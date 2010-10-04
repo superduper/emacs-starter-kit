@@ -890,7 +890,6 @@ title: Программа Emacs Starter Kit
 68. *C-x O* и *C-x C-o* — переход к предыдущему и к слудующему окну.
 
     #+begin_src emacs-lisp 
-    (windmove-default-keybindings) ;; Shift+direction
     (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1)))
     (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 1)))
     #+end_src
