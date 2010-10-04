@@ -2,7 +2,19 @@
 #+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t TeX:t LaTeX:nil skip:nil d:t tags:not-in-toc
 #+STARTUP: INDENT HIDESTARS
 
-1. *ERC* — Internet Relay Chat для Emacs.
+1. *Сочетания клавиш.*
+
+2. *M-Space* — переключение между языками. Две легко доступные,
+    вплотную расположенные клавиши — это лучший вариант. Эта
+    комбинация пересекается с вызовом «меню окна» в среде GNOME, но в
+    гноме я отключил это сочетание за ненадобностью.
+
+    #+begin_src emacs-lisp
+    (global-set-key (kbd "M-SPC") 'toggle-input-method)
+    #+end_src
+
+
+3. *ERC* — Internet Relay Chat для Emacs.
 
    #+begin_src emacs-lisp :tangle yes
    (require 'erc)
@@ -59,7 +71,7 @@
        (erc-select :server "irc.freenode.net" :port 6667 :nick "zahardzhan")))
    #+end_src
 
-2. Моя цветовая тема «Dzhan».
+4. Моя цветовая тема «Dzhan».
 
    #+begin_src emacs-lisp :tangle yes
    (require 'color-theme)
@@ -206,7 +218,7 @@
    (provide 'color-theme-dzhan)
    #+end_src
 
-3. *Info-mode.* В директории =info= хранятся документы в
+5. *Info-mode.* В директории =info= хранятся документы в
    соответствующем формате.
    
    #+begin_src emacs-lisp :tangle yes
@@ -215,7 +227,7 @@
    (add-to-list 'Info-directory-list (concat dotfiles-dir "/info"))
    #+end_src
 
-4. *Org-mode.* Проект «Bullshit mode on» — мой блог.
+6. *Org-mode.* Проект «Bullshit mode on» — мой блог.
    
    #+begin_src emacs-lisp :tangle yes
    (setq org-publish-project-alist
@@ -241,7 +253,7 @@
                          "zahardzhan.github.com-static"))))
    #+end_src
 
-5. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
+7. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
    типографики, то для получения сносного текста достаточно уметь
    применять всего 6 символов. О /правилах применения/ хорошо
    рассказал Лебедев в своем «Ководстве»: [[http://www.artlebedev.ru/kovodstvo/sections/62/][§ 62. Экранная типографика]],
@@ -251,32 +263,32 @@
 
    Далее идут настройки пакета [[file:src/typopunct.el][typopunct]].
 
-6. Загружаем /typopunct.el/ и выбираем русскую типографику:
+8. Загружаем /typopunct.el/ и выбираем русскую типографику:
 
    #+begin_src emacs-lisp
    (require 'typopunct)
    (setq-default typopunct-buffer-language 'russian)
    #+end_src
 
-7. Функция включает /typopunct-mode/.
+9. Функция включает /typopunct-mode/.
 
    #+begin_src emacs-lisp
    (defun turn-on-typopunct-mode ()
      (typopunct-mode t))
    #+end_src
 
-8. Здесь я включаю типографику в режимах /org-mode/ и
-   /markdown-mode/. Чтобы включить типографику в других режимах —
-   добавте функцию =turn-on-typopunct-mode= в соответствующие ловушки
-   или воспользуйтесь командой =M-x typopunct-mode=.
+10. Здесь я включаю типографику в режимах /org-mode/ и
+    /markdown-mode/. Чтобы включить типографику в других режимах —
+    добавте функцию =turn-on-typopunct-mode= в соответствующие ловушки
+    или воспользуйтесь командой =M-x typopunct-mode=.
 
-   #+begin_src emacs-lisp
-   (add-hook 'markdown-mode-hook 'turn-on-typopunct-mode)
-   (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
-   #+end_src
+    #+begin_src emacs-lisp
+    (add-hook 'markdown-mode-hook 'turn-on-typopunct-mode)
+    (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
+    #+end_src
 
-9. *Magit-mode.* Режим для работы с системой контроля версий git.
+11. *Magit-mode.* Режим для работы с системой контроля версий git.
 
-   #+begin_src emacs-lisp :tangle yes
-   (require 'magit)
-   #+end_src
+    #+begin_src emacs-lisp :tangle yes
+    (require 'magit)
+    #+end_src
