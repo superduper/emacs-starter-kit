@@ -2,9 +2,10 @@
 #+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t TeX:t LaTeX:nil skip:nil d:t tags:not-in-toc
 #+STARTUP: INDENT HIDESTARS
 
-1. Установка любимых пакетов из *ELPA*.
+1. Установка любимых пакетов из *ELPA*. Работает только с одной
+   активной локальной веткой репозитория.
 
-    #+begin_src emacs-lisp :tangle none
+    #+begin_src emacs-lisp :tangle no
       (starter-kit-install-packages-from-elpa 
        '(clojure-mode       ;; Major mode for Clojure code
          clojure-test-mode  ;; Minor mode for Clojure tests
@@ -298,10 +299,4 @@
     #+begin_src emacs-lisp
     (add-hook 'markdown-mode-hook 'turn-on-typopunct-mode)
     (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
-    #+end_src
-
-12. *Magit-mode.* Режим для работы с системой контроля версий git.
-
-    #+begin_src emacs-lisp :tangle yes
-    (require 'magit)
     #+end_src
