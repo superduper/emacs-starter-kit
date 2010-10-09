@@ -5,12 +5,11 @@
 1. Установка любимых пакетов из *ELPA*. Работает только с одной
    активной локальной веткой репозитория.
 
-    #+begin_src emacs-lisp :tangle no
+    #+begin_src emacs-lisp :tangle yes
       (starter-kit-install-packages-from-elpa 
        '(clojure-mode       ;; Major mode for Clojure code
          clojure-test-mode  ;; Minor mode for Clojure tests
          htmlize            ;; Convert buffer text and decorations to HTML.
-         magit              ;; Control Git from Emacs.
          swank-clojure      ;; Slime adapter for clojure
          slime              ;; Superior Lisp Interaction Mode for Emacs
          slime-repl         ;; Read-Eval-Print Loop written in Emacs Lisp
@@ -30,7 +29,7 @@
 
 4. *ERC* — Internet Relay Chat для Emacs.
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
    (require 'erc)
    (require 'erc-autoaway)
    (require 'erc-fill)
@@ -87,7 +86,7 @@
 
 5. Моя цветовая тема «Dzhan».
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
    (require 'color-theme)
    
    (setq dzhan-fore-color    "#b0b0b0"
@@ -235,7 +234,7 @@
 6. *Info-mode.* В директории =info= хранятся документы в
    соответствующем формате.
    
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
    (require 'info)
    
    (add-to-list 'Info-directory-list (concat dotfiles-dir "/info"))
@@ -243,7 +242,7 @@
 
 7. *Org-mode.* Проект «Bullshit mode on» — мой блог.
    
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp
    (setq org-publish-project-alist
          '(("zahardzhan.github.com-org"
             :base-directory "~/Dropbox/Blog/org/"
