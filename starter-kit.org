@@ -1254,7 +1254,7 @@ title: Программа Emacs Starter Kit
 109. Вертикальные разделители буферов — черного цвета. Включите этот
      код чтобы разделители стали белыми.
 
-     #+begin_src emacs-lisp :tanglex no
+     #+begin_src emacs-lisp :tangle no
      (set-face-background 'vertical-border "white")
      (set-face-foreground 'vertical-border "white")
      #+end_src
