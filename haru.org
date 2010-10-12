@@ -7,12 +7,9 @@
 
     #+begin_src emacs-lisp :tangle yes
       (starter-kit-install-packages-from-elpa 
-       '(clojure-mode       ;; Major mode for Clojure code
-         clojure-test-mode  ;; Minor mode for Clojure tests
-         htmlize            ;; Convert buffer text and decorations to HTML.
-         swank-clojure      ;; Slime adapter for clojure
-         slime              ;; Superior Lisp Interaction Mode for Emacs
+       '(slime              ;; Superior Lisp Interaction Mode for Emacs
          slime-repl         ;; Read-Eval-Print Loop written in Emacs Lisp
+         htmlize            ;; Convert buffer text and decorations to HTML.
          ))
     #+end_src
 
