@@ -1,0 +1,11 @@
+#+TITLE: Настройки Emacs для нетбука с Jolicloud
+#+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t TeX:t LaTeX:nil skip:nil d:t tags:not-in-toc
+#+STARTUP: INDENT HIDESTARS
+
+1. Ссылки открываются в браузере «Nickel», специальной сборке Google
+   Chrome для Jolicloud.
+
+    #+begin_src emacs-lisp :tangle yes
+    (setq browse-url-browser-function 'browse-url-generic
+          browse-url-generic-program "nickel-browser")
+    #+end_src
