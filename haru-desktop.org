@@ -1,0 +1,20 @@
+#+TITLE: Настройки Emacs для десктопа ASRock ION 330 с Ubuntu 10.10
+#+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t TeX:t LaTeX:nil skip:nil d:t tags:not-in-toc
+#+STARTUP: INDENT HIDESTARS
+
+1. Ссылки открываются в браузере Google Chrome.
+
+    #+begin_src emacs-lisp :tangle yes
+    (setq browse-url-browser-function 'browse-url-generic
+          browse-url-generic-program "chromium-browser")
+    #+end_src
+
+2. В отличие от стандартных клавиатур, на яблочной нет клавиши
+   Windows, вместо неё — клавиша Alt, а на месте Alt — клавиша
+   Command. Малый размер и положение вызывают неудобство, но оно
+   решается перестановкой Alt и Command.
+
+   #+begin_src emacs-lisp :tangle yes
+   (setq x-meta-keysym 'super)
+   (setq x-super-keysym 'meta)
+   #+end_src
