@@ -332,3 +332,10 @@
     #+begin_src emacs-lisp
     (setq htmlize-output-type 'inline-css)
     #+end_src
+
+14. Функция =swap-meta-super= меняет местами клавиши Meta и Super.
+
+    #+begin_src emacs-lisp
+    (setq x-meta-keysym 'super)
+    (setq x-super-keysym 'meta)
+    #+end_src
