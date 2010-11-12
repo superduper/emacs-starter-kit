@@ -336,6 +336,7 @@
 14. Функция =swap-meta-super= меняет местами клавиши Meta и Super.
 
     #+begin_src emacs-lisp
-    (setq x-meta-keysym 'super)
-    (setq x-super-keysym 'meta)
+    (defun swap-meta-super ()
+      (setq x-meta-keysym 'super)
+      (setq x-super-keysym 'meta))
     #+end_src
