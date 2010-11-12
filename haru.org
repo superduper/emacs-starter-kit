@@ -7,8 +7,9 @@
 
     #+begin_src emacs-lisp :tangle yes
       (starter-kit-install-packages-from-elpa 
-       '(slime              ;; Superior Lisp Interaction Mode for Emacs
-         slime-repl         ;; Read-Eval-Print Loop written in Emacs Lisp
+       '(
+         ;; slime              ;; Superior Lisp Interaction Mode for Emacs
+         ;; slime-repl         ;; Read-Eval-Print Loop written in Emacs Lisp
          htmlize            ;; Convert buffer text and decorations to HTML.
          ))
     #+end_src
@@ -263,7 +264,22 @@
                          "zahardzhan.github.com-static"))))
    #+end_src
 
-8. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
+8. Поддержка интерактивного литературного программирования в Babel —
+   запуск блоков кода в документе в соответствующих сессиях языков
+   программирования. Для каждого указанного здесь языка должны быть
+   установлены необходимые ему пакеты и режимы Emacs. Подробнее на
+   [[http://orgmode.org/worg/org-contrib/babel/languages.php][офсайте]].
+
+   #+begin_src emacs-lisp
+   (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((R . t)
+       (emacs-lisp . t)
+       (clojure . t)
+       (python . t)))
+   #+end_src
+
+9. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
    типографики, то для получения сносного текста достаточно уметь
    применять всего 6 символов. О /правилах применения/ хорошо
    рассказал Лебедев в своем «Ководстве»: [[http://www.artlebedev.ru/kovodstvo/sections/62/][§ 62. Экранная типографика]],
@@ -273,21 +289,21 @@
 
    Далее идут настройки пакета [[file:src/typopunct.el][typopunct]].
 
-9. Загружаем /typopunct.el/ и выбираем русскую типографику:
+10. Загружаем /typopunct.el/ и выбираем русскую типографику:
 
-   #+begin_src emacs-lisp
-   (require 'typopunct)
-   (setq-default typopunct-buffer-language 'russian)
-   #+end_src
+    #+begin_src emacs-lisp
+    (require 'typopunct)
+    (setq-default typopunct-buffer-language 'russian)
+    #+end_src
 
-10. Функция включает /typopunct-mode/.
+11. Функция включает /typopunct-mode/.
 
     #+begin_src emacs-lisp
     (defun turn-on-typopunct-mode ()
       (typopunct-mode t))
     #+end_src
 
-11. Здесь я включаю типографику в режимах /org-mode/ и
+12. Здесь я включаю типографику в режимах /org-mode/ и
     /markdown-mode/. Чтобы включить типографику в других режимах —
     добавте функцию =turn-on-typopunct-mode= в соответствующие ловушки
     или воспользуйтесь командой =M-x typopunct-mode=.
@@ -295,4 +311,24 @@
     #+begin_src emacs-lisp
     (add-hook 'markdown-mode-hook 'turn-on-typopunct-mode)
     (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
+    #+end_src
+
+13. Пакет *htmlize* служит для экспортирования текста буферов и файлов
+    в подсвеченый текущей цветовой темой HTML. Пакет поддерживает 3
+    варианта экспорта в HTML, для выбора конкретного варианта нужно
+    установить значение переменной =htmlize-output-type= в
+
+    - =\'css= — вариант по-умолчанию, в нем htmlize для установки
+      цветов подсветки использует /тег/ =style= в заголовке
+      HTML-документа. В итоге получается цельный документ.
+      
+    - =\'inline-css= — цвета устанавливаются в /параметре/ =style=
+      каждого тага, таким образом блоки экспортируемого документа
+      можно вставлять в другие документы.
+
+    - =\'font= — как =\'inline-css=, но используется /нестандартный/
+      параметр тегов =font=; для совместимости с древними браузерами.
+
+    #+begin_src emacs-lisp
+    (setq htmlize-output-type 'inline-css)
     #+end_src
