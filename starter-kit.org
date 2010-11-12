@@ -1167,6 +1167,7 @@ title: Программа Emacs Starter Kit
     #+begin_src emacs-lisp
     (set-terminal-coding-system 'utf-8)
     (set-keyboard-coding-system 'utf-8)
+    (set-language-environment "utf-8")
     (prefer-coding-system 'utf-8)
     (ansi-color-for-comint-mode-on)
     #+end_src
@@ -1501,7 +1502,13 @@ title: Программа Emacs Starter Kit
         :group 'starter-kit-faces)
      #+end_src
 
-124. *Paredit* это режим структурного редактирования лиспокода. Проще
+124. SLIME должен понимать UTF-8.
+
+     #+begin_src emacs-lisp
+     (setq slime-net-coding-system 'utf-8-unix)
+     #+end_src
+
+125. *Paredit* это режим структурного редактирования лиспокода. Проще
      говоря, он расставляет, переставляет и удаляет скобочки с учётом
      семантики кода. Возможно, сразу его освоить не получиться, потому
      как этот режим выполнен в лучших традициях эмакса с добрым
@@ -1520,7 +1527,7 @@ title: Программа Emacs Starter Kit
        '(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp))
      #+end_src
 
-125. *Emacs Lisp.* Включаем режим показа документации elisp-функций в
+126. *Emacs Lisp.* Включаем режим показа документации elisp-функций в
      минибуфере, запускаем ловушку =coding-hook= для включения
      удобcтв при кодировании, включаем режим paredit.
 
@@ -1529,7 +1536,7 @@ title: Программа Emacs Starter Kit
      (add-hook 'emacs-lisp-mode-hook 'esk-remove-elc-on-save)
      #+end_src
 
-126. Удаляет откомпилированный =.elc=-файл при сохранении
+127. Удаляет откомпилированный =.elc=-файл при сохранении
      оригинального =.el=-файла.
 
      #+begin_src emacs-lisp
@@ -1542,20 +1549,20 @@ title: Программа Emacs Starter Kit
                        (delete-file (concat buffer-file-name "c"))))))
      #+end_src
 
-127. *M-.* находит определение elisp-функции.
+128. *M-.* находит определение elisp-функции.
 
      #+begin_src emacs-lisp
      (define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
      #+end_src
 
-128. *Clojure.*
+129. *Clojure.*
 
      #+begin_src emacs-lisp
      (eval-after-load 'find-file-in-project
        '(add-to-list 'ffip-patterns "*.clj"))
      #+end_src
 
-129. Команда =clojure-project= больше не используется.
+130. Команда =clojure-project= больше не используется.
      
      #+begin_src emacs-lisp
        (defun clojure-project (path)
@@ -1563,7 +1570,7 @@ title: Программа Emacs Starter Kit
          (message "Deprecated in favour of M-x swank-clojure-project. Install swank-clojure from ELPA."))
      #+end_src
 
-130. В исходниках Clojure =fn= заменяется на =ƒ= для красоты и
+131. В исходниках Clojure =fn= заменяется на =ƒ= для красоты и
      экономии места.
 
      #+begin_src emacs-lisp
@@ -1575,7 +1582,7 @@ title: Программа Emacs Starter Kit
                                     nil))))))
      #+end_src
 
-131. Во *всех режимах лиспа* включаются тусклые скобочки, режим
+132. Во *всех режимах лиспа* включаются тусклые скобочки, режим
      /paredit/ и общие улучшения для кодирования.
 
      #+begin_src emacs-lisp
@@ -1590,7 +1597,7 @@ title: Программа Emacs Starter Kit
         (intern (concat (symbol-name x) "-mode-hook")) 'run-coding-hook))
      #+end_src
 
-132. *Haskell.* Красивые \lambda в Haskell-коде.
+133. *Haskell.* Красивые \lambda в Haskell-коде.
 
      #+begin_src emacs-lisp
      (defun pretty-lambdas-haskell ()
@@ -1601,7 +1608,7 @@ title: Программа Emacs Starter Kit
                          nil))))))
      #+end_src
 
-133. Все эти прелести включаются при включении режима Haskell с
+134. Все эти прелести включаются при включении режима Haskell с
      помощью ловушки =haskell-mode-hook=.
 
      #+begin_src emacs-lisp
@@ -1609,7 +1616,7 @@ title: Программа Emacs Starter Kit
      (add-hook 'haskell-mode-hook 'pretty-lambdas-haskell)
      #+end_src
 
-134. *Ruby*. Ниже идет код в поддержку [[http://www.ruby-lang.org/en/][Ruby]] — динамического языка с
+135. *Ruby*. Ниже идет код в поддержку [[http://www.ruby-lang.org/en/][Ruby]] — динамического языка с
      открытым исходным кодом.
 
      #+begin_src emacs-lisp
@@ -1627,7 +1634,7 @@ title: Программа Emacs Starter Kit
      (global-set-key (kbd "C-h r") 'ri)
      #+end_src
 
-135. И gamespec и rake-файлы — это всё Ruby, включаем для них
+136. И gamespec и rake-файлы — это всё Ruby, включаем для них
      соответствующий режим.
 
      #+begin_src emacs-lisp
@@ -1640,13 +1647,13 @@ title: Программа Emacs Starter Kit
      (add-to-list 'auto-mode-alist '("Vagrantfile$" . ruby-mode))
      #+end_src
 
-136. Мы не хотим редактировать рубиновый байткод.
+137. Мы не хотим редактировать рубиновый байткод.
 
      #+begin_src emacs-lisp
      (add-to-list 'completion-ignored-extensions ".rbc")
      #+end_src
 
-137. Rake.
+138. Rake.
 
      #+begin_src emacs-lisp
      (defun pcomplete/rake ()
@@ -1667,7 +1674,7 @@ title: Программа Emacs Starter Kit
        (shell-command-to-string (concat "rake " (if (= 0 (length task)) "default" task))))
      #+end_src
 
-138. Очищаем буфер с результатами компиляции после каждого тестового
+139. Очищаем буфер с результатами компиляции после каждого тестового
      запуска.
 
      #+begin_src emacs-lisp
@@ -1681,13 +1688,13 @@ title: Программа Emacs Starter Kit
           (ad-activate 'ruby-do-run-w/compilation)))
      #+end_src
 
-139. Ловушки.
+140. Ловушки.
 
      #+begin_src emacs-lisp
      (add-hook 'ruby-mode-hook 'run-coding-hook)
      #+end_src
      
-140. Flymake. Проверка синтаксиса в режиме Ruby.
+141. Flymake. Проверка синтаксиса в режиме Ruby.
 
      #+begin_src emacs-lisp
      (defun flymake-ruby-init ()
@@ -1723,7 +1730,7 @@ title: Программа Emacs Starter Kit
           (add-hook 'ruby-mode-hook 'flymake-ruby-enable)))
      #+end_src
 
-141. Rinari — минорный режим для Ruby On Rails. Ищите на
+142. Rinari — минорный режим для Ruby On Rails. Ищите на
      [[http://rinari.rubyforge.org/][rinari.rubyforge]] дополнительную информацию о rinari.
 
      #+begin_src emacs-lisp
@@ -1732,7 +1739,7 @@ title: Программа Emacs Starter Kit
                  'css-mode-hook 'yaml-mode-hook 'javascript-mode-hook))
      #+end_src
 
-142. *JavaScript.*
+143. *JavaScript.*
 
      #+begin_src emacs-lisp
      (autoload 'espresso-mode "espresso" "Start espresso-mode" t)
@@ -1758,7 +1765,7 @@ title: Программа Emacs Starter Kit
                                             nil)))))))
      #+end_src
 
-143. *Perl.*
+144. *Perl.*
 
      #+begin_src emacs-lisp
      (eval-after-load 'cperl-mode
@@ -1772,20 +1779,20 @@ title: Программа Emacs Starter Kit
      (add-to-list 'auto-mode-alist '("\\.tt$" . tt-mode))
      #+end_src
 
-144. Регенерация автозагрузочных файлов.
+145. Регенерация автозагрузочных файлов.
 
      #+begin_src emacs-lisp 
      (regen-autoloads)
      #+end_src
 
-145. По-умолчанию загружается пользовательский файл =custom.el=, его
+146. По-умолчанию загружается пользовательский файл =custom.el=, его
      нет в комплекте Kit'a.
 
      #+begin_src emacs-lisp 
      (load custom-file 'noerror)
      #+end_src
 
-146. *Загрузка настроек конкретного пользователя и машины.* После того
+147. *Загрузка настроек конкретного пользователя и машины.* После того
      как мы загрузили все настройки Starter Kit, мы можем загрузить
      настройки конкретного пользователя и конкретной машины.
 
