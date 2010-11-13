@@ -6,12 +6,8 @@
    активной локальной веткой репозитория.
 
     #+begin_src emacs-lisp :tangle yes
-      (starter-kit-install-packages-from-elpa 
-       '(
-         ;; slime              ;; Superior Lisp Interaction Mode for Emacs
-         ;; slime-repl         ;; Read-Eval-Print Loop written in Emacs Lisp
-         htmlize            ;; Convert buffer text and decorations to HTML.
-         ))
+    (starter-kit-install-packages-from-elpa 
+     '(htmlize))
     #+end_src
 
 2. *Сочетания клавиш.*
