@@ -15,6 +15,5 @@
    решается перестановкой Alt и Command.
 
    #+begin_src emacs-lisp :tangle yes
-   (setq x-meta-keysym 'super)
-   (setq x-super-keysym 'meta)
+   (swap-meta-super)
    #+end_src

@@ -1,6 +1,6 @@
 #+TITLE: Haru.org
 #+OPTIONS: H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t TeX:t LaTeX:nil skip:nil d:t tags:not-in-toc
-#+STARTUP: INDENT HIDESTARS
+#+STARTUP: INDENT
 
 1. Установка любимых пакетов из *ELPA*. Работает только с одной
    активной локальной веткой репозитория.
@@ -10,9 +10,7 @@
      '(htmlize))
     #+end_src
 
-2. *Сочетания клавиш.*
-
-3. *M-Space* — переключение между языками. Две легко доступные,
+2. *M-Space* — переключение между языками. Две легко доступные,
     вплотную расположенные клавиши — это лучший вариант. Эта
     комбинация пересекается с вызовом «меню окна» в среде GNOME, но в
     гноме я отключил это сочетание за ненадобностью.
@@ -21,7 +19,7 @@
     (global-set-key (kbd "M-SPC") 'toggle-input-method)
     #+end_src
 
-4. *ERC* — Internet Relay Chat для Emacs.
+3. *ERC* — Internet Relay Chat для Emacs.
 
    #+begin_src emacs-lisp
    (require 'erc)
@@ -78,7 +76,7 @@
        (erc-select :server "irc.freenode.net" :port 6667 :nick "zahardzhan")))
    #+end_src
 
-5. Моя цветовая тема «Dzhan».
+4. Моя цветовая тема «Dzhan».
 
    #+begin_src emacs-lisp
    (require 'color-theme)
@@ -225,7 +223,7 @@
    (provide 'color-theme-dzhan)
    #+end_src
 
-6. *Info-mode.* В директории =info= хранятся документы в
+5. *Info-mode.* В директории =info= хранятся документы в
    соответствующем формате.
    
    #+begin_src emacs-lisp
@@ -234,7 +232,7 @@
    (add-to-list 'Info-directory-list (concat dotfiles-dir "/info"))
    #+end_src
 
-7. *Org-mode.* Проект «Bullshit mode on» — мой блог.
+6. *Org-mode.* Проект «Bullshit mode on» — мой блог.
    
    #+begin_src emacs-lisp
    (setq org-publish-project-alist
@@ -260,7 +258,7 @@
                          "zahardzhan.github.com-static"))))
    #+end_src
 
-8. Поддержка интерактивного литературного программирования в Babel —
+7. Поддержка интерактивного литературного программирования в Babel —
    запуск блоков кода в документе в соответствующих сессиях языков
    программирования. Для каждого указанного здесь языка должны быть
    установлены необходимые ему пакеты и режимы Emacs. Подробнее на
@@ -275,7 +273,7 @@
        (python . t)))
    #+end_src
 
-9. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
+8. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
    типографики, то для получения сносного текста достаточно уметь
    применять всего 6 символов. О /правилах применения/ хорошо
    рассказал Лебедев в своем «Ководстве»: [[http://www.artlebedev.ru/kovodstvo/sections/62/][§ 62. Экранная типографика]],
@@ -285,21 +283,21 @@
 
    Далее идут настройки пакета [[file:src/typopunct.el][typopunct]].
 
-10. Загружаем /typopunct.el/ и выбираем русскую типографику:
+9. Загружаем /typopunct.el/ и выбираем русскую типографику:
 
-    #+begin_src emacs-lisp
-    (require 'typopunct)
-    (setq-default typopunct-buffer-language 'russian)
-    #+end_src
+   #+begin_src emacs-lisp
+   (require 'typopunct)
+   (setq-default typopunct-buffer-language 'russian)
+   #+end_src
 
-11. Функция включает /typopunct-mode/.
+10. Функция включает /typopunct-mode/.
 
     #+begin_src emacs-lisp
     (defun turn-on-typopunct-mode ()
       (typopunct-mode t))
     #+end_src
 
-12. Здесь я включаю типографику в режимах /org-mode/ и
+11. Здесь я включаю типографику в режимах /org-mode/ и
     /markdown-mode/. Чтобы включить типографику в других режимах —
     добавте функцию =turn-on-typopunct-mode= в соответствующие ловушки
     или воспользуйтесь командой =M-x typopunct-mode=.
@@ -309,7 +307,7 @@
     (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
     #+end_src
 
-13. Пакет *htmlize* служит для экспортирования текста буферов и файлов
+12. Пакет *htmlize* служит для экспортирования текста буферов и файлов
     в подсвеченый текущей цветовой темой HTML. Пакет поддерживает 3
     варианта экспорта в HTML, для выбора конкретного варианта нужно
     установить значение переменной =htmlize-output-type= в
@@ -329,10 +327,11 @@
     (setq htmlize-output-type 'inline-css)
     #+end_src
 
-14. Функция =swap-meta-super= меняет местами клавиши Meta и Super.
+13. Функция =swap-meta-super= меняет местами клавиши Meta и Super.
 
     #+begin_src emacs-lisp
     (defun swap-meta-super ()
+      (interactive "p")
       (setq x-meta-keysym 'super)
       (setq x-super-keysym 'meta))
     #+end_src
