@@ -335,3 +335,32 @@
       (setq x-meta-keysym 'super)
       (setq x-super-keysym 'meta))
     #+end_src
+
+14. SLIME, идущий в поставке ELPA урезан настолько, что годен только
+    для работы с Clojure. От эмакса требуется работа с другими
+    лиспами, мне пришлось поставить полноценный SLIME из
+    git-репозитория
+
+    : git clone git://github.com/nablaone/slime.git ~/.emacs.d/slime
+
+    #+begin_src emacs-lisp
+    (add-to-list 'load-path "~/.emacs.d/src/slime")
+    (add-to-list 'load-path "~/.emacs.d/src/slime/contrib")
+    (setq slime-backend "~/.emacs.d/src/slime/swank-loader.lisp")
+    
+    (load "slime-autoloads")
+    
+    (require 'slime)
+    (require 'slime-autoloads)
+    
+    (eval-after-load "slime"
+      `(progn
+         (slime-setup '(slime-repl))
+         (custom-set-variables
+          '(inhibit-splash-screen t)
+          '(slime-complete-symbol*-fancy t)
+          '(slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+          '(slime-net-coding-system 'utf-8-unix)
+          '(slime-startup-animation nil)
+          '(slime-lisp-implementations '((sbcl ("/usr/bin/sbcl")))))))
+    #+end_src
