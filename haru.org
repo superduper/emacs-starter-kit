@@ -331,7 +331,7 @@
 
     #+begin_src emacs-lisp
     (defun swap-meta-super ()
-      (interactive "p")
+      (interactive)
       (setq x-meta-keysym 'super)
       (setq x-super-keysym 'meta))
     #+end_src
