@@ -12,4 +12,4 @@
 	url = git://github.com/eschulte/auctex.git
 [submodule "src/slime"]
 	path = src/slime
-	url = https://github.com/nablaone/slime.git
+	url = git://github.com/nablaone/slime.git
