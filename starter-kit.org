@@ -1796,9 +1796,6 @@ title: Программа Emacs Starter Kit
      (if (file-exists-p elisp-source-dir)
        (let ((default-directory elisp-source-dir))
          (normal-top-level-add-subdirs-to-load-path)))
-     (if (file-exists-p system-specific-config) (load system-specific-config))
-     (if (file-exists-p system-specific-literate-config)
-         (org-babel-load-file system-specific-literate-config))
      (if (file-exists-p user-specific-config) (load user-specific-config))
      (if (file-exists-p user-specific-literate-config)
          (org-babel-load-file user-specific-literate-config))
@@ -1806,4 +1803,7 @@ title: Программа Emacs Starter Kit
        (let ((default-directory user-specific-dir))
          (mapc #'load (directory-files user-specific-dir nil ".*el$"))
          (mapc #'org-babel-load-file (directory-files user-specific-dir nil ".*org$"))))
+     (if (file-exists-p system-specific-config) (load system-specific-config))
+     (if (file-exists-p system-specific-literate-config)
+         (org-babel-load-file system-specific-literate-config))
      #+end_src
