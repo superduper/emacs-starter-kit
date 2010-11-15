@@ -327,13 +327,19 @@
     (setq htmlize-output-type 'inline-css)
     #+end_src
 
-13. Функция =swap-meta-super= меняет местами клавиши Meta и Super.
+13. Функция =swap-meta-super= меняет местами клавиши Meta и
+    Super. Функция =swap-super-meta= меняет наоборот.
 
     #+begin_src emacs-lisp
     (defun swap-meta-super ()
       (interactive)
       (setq x-meta-keysym 'super)
       (setq x-super-keysym 'meta))
+
+    (defun swap-super-meta ()
+      (interactive)
+      (setq x-meta-keysym 'meta)
+      (setq x-super-keysym 'super))
     #+end_src
 
 14. SLIME, идущий в поставке ELPA урезан настолько, что годен только
