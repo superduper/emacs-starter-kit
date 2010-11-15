@@ -10,3 +10,6 @@
 [submodule "src/auctex"]
 	path = src/auctex
 	url = git://github.com/eschulte/auctex.git
+[submodule "src/slime"]
+	path = src/slime
+	url = git://github.com/nablaone/slime.git
