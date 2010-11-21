@@ -19,7 +19,18 @@
     (global-set-key (kbd "M-SPC") 'toggle-input-method)
     #+end_src
 
-3. *ERC* — Internet Relay Chat для Emacs.
+3. *F11* включает полноэкранный режим. Требует наличия программы
+   *wmctrl*.
+
+   #+begin_src emacs-lisp
+   (defun switch-full-screen ()
+     (interactive)
+     (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))
+
+   (global-set-key [f11] 'switch-full-screen)
+   #+end_src
+
+4. *ERC* — Internet Relay Chat для Emacs.
 
    #+begin_src emacs-lisp
    (require 'erc)
@@ -76,7 +87,7 @@
        (erc-select :server "irc.freenode.net" :port 6667 :nick "zahardzhan")))
    #+end_src
 
-4. Моя цветовая тема «Dzhan».
+5. Моя цветовая тема «Dzhan».
 
    #+begin_src emacs-lisp
    (require 'color-theme)
@@ -223,7 +234,7 @@
    (provide 'color-theme-dzhan)
    #+end_src
 
-5. *Info-mode.* В директории =info= хранятся документы в
+6. *Info-mode.* В директории =info= хранятся документы в
    соответствующем формате.
    
    #+begin_src emacs-lisp
@@ -232,7 +243,7 @@
    (add-to-list 'Info-directory-list (concat dotfiles-dir "/info"))
    #+end_src
 
-6. *Org-mode.* Проект «Bullshit mode on» — мой блог.
+7. *Org-mode.* Проект «Bullshit mode on» — мой блог.
    
    #+begin_src emacs-lisp
    (setq org-publish-project-alist
@@ -258,7 +269,7 @@
                          "zahardzhan.github.com-static"))))
    #+end_src
 
-7. Поддержка интерактивного литературного программирования в Babel —
+8. Поддержка интерактивного литературного программирования в Babel —
    запуск блоков кода в документе в соответствующих сессиях языков
    программирования. Для каждого указанного здесь языка должны быть
    установлены необходимые ему пакеты и режимы Emacs. Подробнее на
@@ -273,7 +284,7 @@
        (python . t)))
    #+end_src
 
-8. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
+9. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
    типографики, то для получения сносного текста достаточно уметь
    применять всего 6 символов. О /правилах применения/ хорошо
    рассказал Лебедев в своем «Ководстве»: [[http://www.artlebedev.ru/kovodstvo/sections/62/][§ 62. Экранная типографика]],
@@ -283,21 +294,21 @@
 
    Далее идут настройки пакета [[file:src/typopunct.el][typopunct]].
 
-9. Загружаем /typopunct.el/ и выбираем русскую типографику:
+10. Загружаем /typopunct.el/ и выбираем русскую типографику:
 
-   #+begin_src emacs-lisp
-   (require 'typopunct)
-   (setq-default typopunct-buffer-language 'russian)
-   #+end_src
+    #+begin_src emacs-lisp
+    (require 'typopunct)
+    (setq-default typopunct-buffer-language 'russian)
+    #+end_src
 
-10. Функция включает /typopunct-mode/.
+11. Функция включает /typopunct-mode/.
 
     #+begin_src emacs-lisp
     (defun turn-on-typopunct-mode ()
       (typopunct-mode t))
     #+end_src
 
-11. Здесь я включаю типографику в режимах /org-mode/ и
+12. Здесь я включаю типографику в режимах /org-mode/ и
     /markdown-mode/. Чтобы включить типографику в других режимах —
     добавте функцию =turn-on-typopunct-mode= в соответствующие ловушки
     или воспользуйтесь командой =M-x typopunct-mode=.
@@ -307,7 +318,7 @@
     (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
     #+end_src
 
-12. Пакет *htmlize* служит для экспортирования текста буферов и файлов
+13. Пакет *htmlize* служит для экспортирования текста буферов и файлов
     в подсвеченый текущей цветовой темой HTML. Пакет поддерживает 3
     варианта экспорта в HTML, для выбора конкретного варианта нужно
     установить значение переменной =htmlize-output-type= в
@@ -327,7 +338,7 @@
     (setq htmlize-output-type 'inline-css)
     #+end_src
 
-13. Функция =swap-meta-super= меняет местами клавиши Meta и
+14. Функция =swap-meta-super= меняет местами клавиши Meta и
     Super. Функция =swap-super-meta= меняет наоборот.
 
     #+begin_src emacs-lisp
@@ -342,7 +353,7 @@
       (setq x-super-keysym 'super))
     #+end_src
 
-14. SLIME, идущий в поставке ELPA урезан настолько, что годен только
+15. SLIME, идущий в поставке ELPA урезан настолько, что годен только
     для работы с Clojure. От эмакса требуется работа с другими
     лиспами, мне пришлось поставить полноценный SLIME из
     git-репозитория
