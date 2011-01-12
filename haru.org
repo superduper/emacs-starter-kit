@@ -295,7 +295,7 @@
    #+begin_src emacs-lisp
    (require 'info)
    
-   (add-to-list 'Info-directory-list (concat dotfiles-dir "/info"))
+   (add-to-list 'Info-directory-list (concat dotfiles-dir "info"))
    #+end_src
 
 9. *Org-mode.* Проект «Bullshit mode on» — мой блог.
@@ -434,4 +434,61 @@
           '(slime-net-coding-system 'utf-8-unix)
           ;; '(slime-startup-animation nil)
           '(slime-lisp-implementations '((sbcl ("/usr/bin/sbcl")))))))
+    #+end_src
+
+18. *Фортунки.* Их задача проста — заменить стандартный стартовый текст на что-нибудь
+    этакое. Решение старо как мир — фортунки из мира UNIX.
+
+    Фортунки хранятся в файле =fortunes= в директории =.emacs.d=.
+
+    #+begin_src emacs-lisp
+    (defvar fortune-file (concat dotfiles-dir "fortunes")
+      "The file that fortunes come from.")
+    #+end_src
+
+    Функция =fortune= выбирает случайную цитату из файла с фортунками.
+
+    #+begin_src emacs-lisp
+    (defvar fortune-strings nil
+      "The fortunes in the fortune file.")
+    
+    (defun open-fortune-file (file)
+      (find-file file)
+      (if (null fortune-strings)
+          (let ((strings nil)
+            (prev 1))
+        (goto-char (point-min))
+        (while (re-search-forward "^%$" (point-max) t)
+          (push (buffer-substring-no-properties prev (- (point) 1))
+                strings)
+          (setq prev (1+ (point))))
+        (push (buffer-substring-no-properties prev (point-max)) strings)
+        (setq fortune-strings (apply 'vector strings)))))
+    
+    (defun fortune ()
+      "Get a fortune to display."
+      (interactive)
+      (when (null fortune-strings)
+        (open-fortune-file fortune-file)
+        (kill-buffer (current-buffer)))
+      (let* ((n (random (length fortune-strings)))
+         (string (aref fortune-strings n)))
+        (if (interactive-p)
+        (message (format "%s" string))
+          string)))
+    #+end_src
+
+    Заменяем функцию, показывающую при запуске текст в /*scratch*/-буфере
+    на собственную
+
+    #+begin_src emacs-lisp
+    (defun startup-echo-area-message ()
+      (interactive)
+      (let ((start (point))
+            (buffer-was-modified? (buffer-modified-p)))
+        (insert (fortune))
+        (comment-region start (point))
+        (newline)
+        (unless buffer-was-modified?
+          (not-modified))))
     #+end_src
