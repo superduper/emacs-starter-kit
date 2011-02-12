@@ -9,3 +9,9 @@
     (setq browse-url-browser-function 'browse-url-generic
           browse-url-generic-program "nickel-browser")
     #+end_src
+
+2. *Consolas* из Windows Vista — шрифт по-умолчанию.
+
+   #+begin_src emacs-lisp
+   (set-default-font "Consolas-10")
+   #+end_src

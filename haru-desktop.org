@@ -17,3 +17,9 @@
    #+begin_src emacs-lisp :tangle yes
    (swap-meta-super)
    #+end_src
+
+3. *Consolas* из Windows Vista — шрифт по-умолчанию.
+
+   #+begin_src emacs-lisp
+   (set-default-font "Consolas-12")
+   #+end_src
