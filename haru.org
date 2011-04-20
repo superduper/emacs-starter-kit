@@ -492,3 +492,13 @@
         (unless buffer-was-modified?
           (not-modified))))
     #+end_src
+
+19. *Идентация в Java* в 3 пробела.
+
+    #+begin_src emacs-lisp
+      (add-hook 'java-mode-hook 
+                '(lambda ()
+                   (setq tab-width 3)
+                   (setq c-basic-offset 3)
+                   (setq indent-tabs-mode nil)))
+    #+end_src
