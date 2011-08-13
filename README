@@ -1,18 +1,46 @@
-This is a Literate Programming fork of the original Emacs Starter Kit
-which is located at http://github.com/technomancy/emacs-starter-kit/
+Emacs Starter Kit это пакет базовых настроек редактора Emacs, он
+идеален для быстрого начала работы, дополнения своими настройками и
+переноса между компьютерами.
 
-This should provide a saner set of defaults than you get normally with
-Emacs. It's intended for beginners, but provides a good elisp
-initialization structure for all levels of users.
+Это форк оригинального Emacs Starter Kit, выполненный в виде
+литературной программы на русском языке. Почитать о программе можно в
+моем [блоге](http://zahardzhan.github.com/2010/emacs-starter-kit-the-program.html).
 
-The main advantage of this Emacs Starter Kit are
-- better default settings
-- inclusion of many useful libraries
-- "literate" customization embedded in Org-mode files
-- an organizational directory structure
-- git provides for version control, backup, and sharing
+## Установка
 
-The latest version is at http://github.com/eschulte/emacs-starter-kit/
+Emacs Starter Kit рассчитан на работу с Emacs от 22-ой версии и
+выше. Вам понадобится система контроля версий *git*.
 
-For more information including use and instillation instructions see
-http://eschulte.github.com/emacs-starter-kit/
+1. Установка Emacs Starter Kit элементарна: клонируйте git-репозиторий
+   с гитхаба в директорию `.emacs.d`; но перед эти сохраните старые
+   настройки и удалите `.emacs`:
+
+    git clone http://github.com/zahardzhan/emacs-starter-kit.git ~/.emacs.d
+   
+   Затем установите [git-сабмодули](http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#submodules) сторонних пакетов
+   
+    cd ~/.emacs.d/
+    git submodule init
+    git submodule update
+   
+   и соберите последнюю версию Org-mode
+   
+    cd ~/.emacs.d/src/org/
+    make
+
+2. Запустите Emacs.
+
+3. После того как закончите установку вам, возможно, потребуется
+   перезапустить Emacs несколько раз — во время загрузки пакетов из
+   архива пакетов Emacs Lisp [ELPA](http://tromey.com/elpa/)
+   происходят ошибки разбора HTML — просто проигнорируйте их.
+
+4. Если после очередного обновления вы потеряете некоторые
+   автозагрузчики, что даст знать о себе сообщениями об ошибках типа
+   `void function: foobar`, попробуйте использовать команду *M-x
+   regen-autoloads*.
+
+Последнюю версию Emacs Starter Kit можно найти на гитхабе:
+https://github.com/zahardzhan/emacs-starter-kit.
+
+Оригинальная версия: https://github.com/technomancy/emacs-starter-kit.
