@@ -7,7 +7,8 @@
 
     #+begin_src emacs-lisp :tangle yes
     (starter-kit-install-packages-from-elpa 
-     '(htmlize))
+     '(htmlize
+       smex))
     #+end_src
 
 2. Второй язык — русский.
@@ -26,7 +27,23 @@
     (global-set-key (kbd "M-SPC") 'toggle-input-method)
     #+end_src
 
-4. *Smart Tab* — говорит само за себя. Код взят с [[http://www.emacswiki.org/emacs/TabCompletion][Emacs Wiki]], цельный
+4. *Smex* это надстройка над режимом ido для улучшения работы с
+   вызовом команд по *M-x*. После нажатия M-x доступные команды
+   показываются в буфере автодополнения ido, сперва идут 7 последних
+   выполненных команд, затем — команды, отсортированные по частоте
+   использования, длине и в алфавитном порядке. Можно использовать
+   сокращения типа «lnmd» для вызова «line-number-mode» и клавиши
+   C-s и С-r для выбора следующей и предыдущей команды. 
+
+   #+begin_src emacs-lisp
+   (require 'smex)
+   (smex-initialize)
+   (global-set-key (kbd "M-x") 'smex)
+   (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+   (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ;; old M-x
+   #+end_src
+
+5. *Smart Tab* — говорит само за себя. Код взят с [[http://www.emacswiki.org/emacs/TabCompletion][Emacs Wiki]], цельный
    пакет кода смотреть на [[https://github.com/genehack/smart-tab][Gihub]].
 
    #+begin_src emacs-lisp
@@ -74,7 +91,7 @@
    (global-set-key (kbd "TAB") 'smart-tab)
    #+end_src
 
-5. *F11* включает полноэкранный режим. Требует наличия программы
+6. *F11* включает полноэкранный режим. Требует наличия программы
    *wmctrl*.
 
    #+begin_src emacs-lisp
@@ -85,7 +102,7 @@
    (global-set-key [f11] 'switch-full-screen)
    #+end_src
 
-6. *ERC* — Internet Relay Chat для Emacs.
+7. *ERC* — Internet Relay Chat для Emacs.
 
    #+begin_src emacs-lisp
    (require 'erc)
@@ -142,7 +159,7 @@
        (erc-select :server "irc.freenode.net" :port 6667 :nick "zahardzhan")))
    #+end_src
 
-7. Моя цветовая тема «Dzhan».
+8. Моя цветовая тема «Dzhan».
 
    #+begin_src emacs-lisp
    (require 'color-theme)
@@ -289,7 +306,7 @@
    (provide 'color-theme-dzhan)
    #+end_src
 
-8. *Info-mode.* В директории =info= хранятся документы в
+9. *Info-mode.* В директории =info= хранятся документы в
    соответствующем формате.
    
    #+begin_src emacs-lisp
@@ -298,33 +315,33 @@
    (add-to-list 'Info-directory-list (concat dotfiles-dir "info"))
    #+end_src
 
-9. *Org-mode.* Проект «Bullshit mode on» — мой блог.
+10. *Org-mode.* Проект «Bullshit mode on» — мой блог.
    
-   #+begin_src emacs-lisp
-   (setq org-publish-project-alist
-         '(("zahardzhan.github.com-org"
-            :base-directory "~/Dropbox/Blog/org/"
-            :base-extension "org"
-            :publishing-directory "~/Dropbox/Blog/_posts/"
-            :recursive t
-            :publishing-function org-publish-org-to-html
-            :headline-levels 4
-            :html-extension "html"
-            :body-only t)
+    #+begin_src emacs-lisp
+    (setq org-publish-project-alist
+          '(("zahardzhan.github.com-org"
+             :base-directory "~/Dropbox/Blog/org/"
+             :base-extension "org"
+             :publishing-directory "~/Dropbox/Blog/_posts/"
+             :recursive t
+             :publishing-function org-publish-org-to-html
+             :headline-levels 4
+             :html-extension "html"
+             :body-only t)
    
-           ("zahardzhan.github.com-static"
-            :base-directory "~/Dropbox/Blog/org/"
-            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
-            :publishing-directory "~/Dropbox/Blog/_posts/"
-            :recursive t
-            :publishing-function org-publish-attachment)
+            ("zahardzhan.github.com-static"
+             :base-directory "~/Dropbox/Blog/org/"
+             :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|php"
+             :publishing-directory "~/Dropbox/Blog/_posts/"
+             :recursive t
+             :publishing-function org-publish-attachment)
            
-           ("zahardzhan.github.com"
-            :components ("zahardzhan.github.com-org"
-                         "zahardzhan.github.com-static"))))
-   #+end_src
+            ("zahardzhan.github.com"
+             :components ("zahardzhan.github.com-org"
+                          "zahardzhan.github.com-static"))))
+    #+end_src
 
-10. Поддержка интерактивного литературного программирования в Babel —
+11. Поддержка интерактивного литературного программирования в Babel —
     запуск блоков кода в документе в соответствующих сессиях языков
     программирования. Для каждого указанного здесь языка должны быть
     установлены необходимые ему пакеты и режимы Emacs. Подробнее на
@@ -339,7 +356,7 @@
         (python . t)))
     #+end_src
 
-11. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
+12. *Typopunct-mode.* Если не вдаваться в подробности профессиональной
     типографики, то для получения сносного текста достаточно уметь
     применять всего 6 символов. О /правилах применения/ хорошо
     рассказал Лебедев в своем «Ководстве»: [[http://www.artlebedev.ru/kovodstvo/sections/62/][§ 62. Экранная типографика]],
@@ -349,21 +366,21 @@
 
     Далее идут настройки пакета [[file:src/typopunct.el][typopunct]].
 
-12. Загружаем /typopunct.el/ и выбираем русскую типографику:
+13. Загружаем /typopunct.el/ и выбираем русскую типографику:
 
     #+begin_src emacs-lisp
     (require 'typopunct)
     (setq-default typopunct-buffer-language 'russian)
     #+end_src
 
-13. Функция включает /typopunct-mode/.
+14. Функция включает /typopunct-mode/.
 
     #+begin_src emacs-lisp
     (defun turn-on-typopunct-mode ()
       (typopunct-mode t))
     #+end_src
 
-14. Здесь я включаю типографику в режимах /org-mode/ и
+15. Здесь я включаю типографику в режимах /org-mode/ и
     /markdown-mode/. Чтобы включить типографику в других режимах —
     добавте функцию =turn-on-typopunct-mode= в соответствующие ловушки
     или воспользуйтесь командой =M-x typopunct-mode=.
@@ -373,7 +390,7 @@
     (add-hook 'org-mode-hook 'turn-on-typopunct-mode)
     #+end_src
 
-15. Пакет *htmlize* служит для экспортирования текста буферов и файлов
+16. Пакет *htmlize* служит для экспортирования текста буферов и файлов
     в подсвеченый текущей цветовой темой HTML. Пакет поддерживает 3
     варианта экспорта в HTML, для выбора конкретного варианта нужно
     установить значение переменной =htmlize-output-type= в
@@ -393,7 +410,7 @@
     (setq htmlize-output-type 'inline-css)
     #+end_src
 
-16. Функция =swap-meta-super= меняет местами клавиши Meta и
+17. Функция =swap-meta-super= меняет местами клавиши Meta и
     Super. Функция =swap-super-meta= меняет наоборот.
 
     #+begin_src emacs-lisp
@@ -408,7 +425,7 @@
       (setq x-super-keysym 'super))
     #+end_src
 
-17. SLIME, идущий в поставке ELPA урезан настолько, что годен только
+18. SLIME, идущий в поставке ELPA урезан настолько, что годен только
     для работы с Clojure. От эмакса требуется работа с другими
     лиспами, мне пришлось поставить полноценный SLIME из
     git-репозитория
@@ -436,7 +453,7 @@
           '(slime-lisp-implementations '((sbcl ("/usr/bin/sbcl")))))))
     #+end_src
 
-18. *Фортунки.* Их задача проста — заменить стандартный стартовый текст на что-нибудь
+19. *Фортунки.* Их задача проста — заменить стандартный стартовый текст на что-нибудь
     этакое. Решение старо как мир — фортунки из мира UNIX.
 
     Фортунки хранятся в файле =fortunes= в директории =.emacs.d=.
@@ -493,7 +510,7 @@
           (not-modified))))
     #+end_src
 
-19. *Идентация в Java* в 3 пробела.
+20. *Идентация в Java* в 3 пробела.
 
     #+begin_src emacs-lisp
       (add-hook 'java-mode-hook 
