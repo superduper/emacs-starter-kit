@@ -6,6 +6,7 @@
 ;;
 
 (setq dotfiles-dir (file-name-directory (or load-file-name (buffer-file-name))))
+(setq sitelisp-dir (expand-file-name "src" dotfiles-dir))
 
 ;; Org-mode bug on Ubuntu: Cannot exit from Emacs with msg
 ;; move-file-to-trash: Non-regular file: Is a directory, /tmp/babel-XXXXXXX
@@ -15,8 +16,7 @@
 
 (add-to-list 'load-path (expand-file-name
                          "lisp" (expand-file-name
-                                 "org" (expand-file-name
-                                        "src" dotfiles-dir))))
+                                 "org" sitelisp-dir)))
 ;; Load up Org Mode and Babel
 (require 'org-install)
 
