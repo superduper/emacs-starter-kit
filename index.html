@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Emacs Starter Kit by zahardzhan</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Emacs Starter Kit</h1>
+        <p>Пакет настроек Emacs для быстрого начала работы. Подробно документированные исходники в формате org-mode.</p>
+
+        <p class="view"><a href="https://github.com/zahardzhan/emacs-starter-kit">View the Project on GitHub <small>zahardzhan/emacs-starter-kit</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/zahardzhan/emacs-starter-kit/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/zahardzhan/emacs-starter-kit/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/zahardzhan/emacs-starter-kit">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Emacs Starter Kit это пакет базовых настроек редактора Emacs, он идеален для быстрого начала работы, дополнения своими настройками и переноса между компьютерами.</p>
+
+<p>Это форк оригинального Emacs Starter Kit, выполненный в виде литературной программы на русском языке. Почитать о программе можно в моем блоге.</p>
+
+<h3>Установка</h3>
+
+<p>Emacs Starter Kit рассчитан на работу с Emacs от 22-ой версии и выше. Вам понадобится система контроля версий git.</p>
+
+<p>Установка Emacs Starter Kit элементарна: клонируйте git-репозиторий с гитхаба в директорию .emacs.d; но перед эти сохраните старые настройки и удалите директорию .emacs.d:</p>
+
+<pre><code>rm -Rv ~/.emacs.d
+git clone http://github.com/zahardzhan/emacs-starter-kit.git ~/.emacs.d
+</code></pre>
+
+<p>Затем установите git-сабмодули сторонних пакетов</p>
+
+<pre><code>cd ~/.emacs.d/
+git submodule init
+git submodule update
+</code></pre>
+
+<p>и соберите последнюю версию Org-mode</p>
+
+<pre><code>cd ~/.emacs.d/src/org/
+make
+</code></pre>
+
+<p>Запустите Emacs.</p>
+
+<p>После того как закончите установку вам, возможно, потребуется перезапустить Emacs несколько раз — во время загрузки пакетов из архива пакетов Emacs Lisp ELPA происходят ошибки разбора HTML — просто проигнорируйте их.</p>
+
+<p>Если после очередного обновления вы потеряете некоторые автозагрузчики, что даст знать о себе сообщениями об ошибках типа void function: foobar, попробуйте использовать команду M-x regen-autoloads.</p>
+
+<p>Последнюю версию Emacs Starter Kit можно найти на гитхабе: <a href="https://github.com/zahardzhan/emacs-starter-kit">https://github.com/zahardzhan/emacs-starter-kit</a>.</p>
+
+<p>Оригинальная версия: <a href="https://github.com/technomancy/emacs-starter-kit">https://github.com/technomancy/emacs-starter-kit</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/zahardzhan">zahardzhan</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
